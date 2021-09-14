@@ -1,9 +1,5 @@
 @isTest
 private class UpdateAccounts_TEST{
-    @TestSetup
-    static void makeData(){
-        
-    } 
     @isTest static void BatchTest() {
         Account acc1 = new Account(Name = 'Test Account 1');
         insert acc1;
