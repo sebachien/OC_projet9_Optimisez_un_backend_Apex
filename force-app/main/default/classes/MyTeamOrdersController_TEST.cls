@@ -2,6 +2,7 @@
 private class MyTeamOrdersController_TEST {
     @istest static void MyTeamOrdersController_TEST() {
 
+        //create 10 User test
         List<User> listUser = new List<User>();
         Id profId = [SELECT Id FROM Profile WHERE Name = 'Utilisateur standard' LIMIT 1].Id;
         for(Integer i=0; i<10; i++) {
@@ -22,6 +23,7 @@ private class MyTeamOrdersController_TEST {
 
         insert listUser;
 
+        //create team for each usertest
         List<Account> listAccount = new List<Account>();
         List<AccountTeamMember> listAccountTeamMember = new List<AccountTeamMember>();
         Integer j = 0;
@@ -29,13 +31,13 @@ private class MyTeamOrdersController_TEST {
             Account acc1 = new Account(Name = 'Test Account' + j);
             insert acc1;
             AccountTeamMember acctTM = new AccountTeamMember(AccountId = acc1.Id, userId = u.Id,TeamMemberRole = 'Sales Rep');
-            System.debug(acctTM);
             listAccount.add(acc1);
             listAccountTeamMember.add(acctTM);
             j += 1;
             insert acctTM;
         }
 
+        //create 1 Pruduct
         Product2 pd1 = new Product2(Name = 'Chemise Verte longue XYX', Family = 'Chemise');
         insert pd1;
  
@@ -48,6 +50,7 @@ private class MyTeamOrdersController_TEST {
         );
         insert pbe;
 
+        //creat contract
         date myDate = date.today();
         List<Contract> listContract = new List<Contract>();
         for(Account a : listAccount) {
@@ -56,7 +59,7 @@ private class MyTeamOrdersController_TEST {
         }
         insert listContract;
 
-
+        //ativated contracte and create orderItem and order for each contract
         Integer UnitPrice1 = 100;
         Integer UnitPrice2 = 1000;
         for(Contract c: listContract) {
@@ -76,6 +79,7 @@ private class MyTeamOrdersController_TEST {
             UnitPrice2 += 1000;
         }
 
+        //Test if SumOrder is good for each team
         Test.startTest();
         Decimal u = 0;
         for(User user : listUser) {

@@ -10,6 +10,7 @@ public class MyTeamOrdersController {
             for(AccountTeamMember member : members){
                 accountIds.add(member.AccountId);
             }
+            //calculate the sum of the totalAmount for the user's team online
             List<Account> acc = [SELECT Id FROM Account WHERE Id IN :accountIds OR OwnerId = :userId];
             AggregateResult groupedResults = [SELECT SUM(TotalAmount) total FROM Order WHERE AccountId IN :acc];
             return (decimal)groupedResults.get('total');
@@ -17,7 +18,3 @@ public class MyTeamOrdersController {
         set;
     }
 }
-
-//active les team sur salesforce 
-// sur page account (afficher team)
-// somme de tout les order de ma team 
